@@ -5,7 +5,7 @@ public interface IUnit
     int moveLeft();
     int moveRight();
     void fight(IUnit unit);
-    void recieveDamage(int damage);
+    void decreaseHealth(int damage);
     void die();
     int getDamage();
 

@@ -94,4 +94,16 @@ public class Map implements IMap
             System.out.println();
         }
     }
+
+    @Override
+    public void createMap()
+    {
+        units = new IUnit[20][20];
+    }
+
+    @Override
+    public void spawnPlayer(int x, int y, int health)
+    {
+        addUnit(new SwordsMan(x, y, health));
+    }
 }

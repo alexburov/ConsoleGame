@@ -69,7 +69,7 @@ abstract class Unit implements IUnit
     }
 
     @Override
-    public void recieveDamage(int damage)
+    public void decreaseHealth(int damage)
     {
         int currentHealth = this.getHealth();
         this.setHealth(currentHealth-damage);

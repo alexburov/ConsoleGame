@@ -11,7 +11,7 @@ public class SwordsMan extends Unit implements IUnit
     {
             if (this.isAlive())
             {
-                unit.recieveDamage(this.getDamage());
+                unit.decreaseHealth(this.getDamage());
                 System.out.println("Enemy recieved " + this.getDamage() + " damage");
                 System.out.println("Enemy's health: " + unit.getHealth());
             }
@@ -22,7 +22,7 @@ public class SwordsMan extends Unit implements IUnit
             }
             if (unit.isAlive())
             {
-                this.recieveDamage(unit.getDamage());
+                this.decreaseHealth(unit.getDamage());
                 System.out.println("You recieved " + unit.getDamage() + " damage");
                 System.out.println("Yours health: " + this.getHealth());
             }

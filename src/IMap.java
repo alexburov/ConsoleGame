@@ -8,4 +8,6 @@ public interface IMap
     void addUnit(Unit unit);
     void changeUnitPosition(IUnit unit, int newX, int newY) throws IOException, AWTException;
     void updatePreviousMap();
+    void createMap();
+    void spawnPlayer(int x, int y, int health);
 }

@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Program
@@ -9,25 +8,17 @@ public class Program
 
     public static void main(String[] args)
     {
-        createMap();
+        map.createMap();
         map.updatePreviousMap();
-        spawnPlayer(10, 10, 100);
+        map.spawnPlayer(10,10,100);
+        player = (SwordsMan)map.units[10][10];
         SwordsMan enemy = new SwordsMan(10,5,50);
         map.addUnit(enemy);
         getPlayerMove();
 
     }
 
-    static void createMap()
-    {
-        map.units = new IUnit[20][20];
-    }
 
-    static void spawnPlayer(int x, int y, int health)
-    {
-        player = new SwordsMan(x, y, health);
-        map.addUnit(player);
-    }
 
     static void getPlayerMove()
     {
