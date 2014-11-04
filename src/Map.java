@@ -4,6 +4,7 @@ import java.io.IOException;
 public class Map implements IMap
 {
     IUnit[][] units;
+    IUnit[][] previousUnits;
     @Override
     public IUnit checkPosition(int x, int y)
     {
@@ -51,7 +52,9 @@ public class Map implements IMap
         IUnit checkUnit = this.units[newY][newX];
         if (checkUnit == null || !checkUnit.isAlive())
         {
-            this.units[unit.getY()][unit.getX()] = null;
+            IUnit previousUnit = previousUnits[unit.getY()][unit.getX()];
+            updatePreviousMap();
+            this.units[unit.getY()][unit.getX()] = previousUnit;
             unit.setX(newX);
             unit.setY(newY);
             this.units[newY][newX] = unit;
@@ -74,6 +77,14 @@ public class Map implements IMap
                 this.printMap();
             }
         }
+    }
+
+    @Override
+    public void updatePreviousMap()
+    {
+        previousUnits = new IUnit[units.length][];
+        for (int i = 0; i < units.length; i++)
+            previousUnits[i] = units[i].clone();
     }
 
     public void clearWorld()

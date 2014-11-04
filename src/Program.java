@@ -1,25 +1,25 @@
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Program
 {
 
-    static Map map;
+    static Map map = new Map();
     static SwordsMan player;
 
     public static void main(String[] args)
     {
         createMap();
+        map.updatePreviousMap();
         spawnPlayer(10, 10, 100);
         SwordsMan enemy = new SwordsMan(10,5,50);
         map.addUnit(enemy);
         getPlayerMove();
+
     }
 
     static void createMap()
     {
-        map = new Map();
         map.units = new IUnit[20][20];
     }
 

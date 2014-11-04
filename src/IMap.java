@@ -7,4 +7,5 @@ public interface IMap
     void printMap();
     void addUnit(Unit unit);
     void changeUnitPosition(IUnit unit, int newX, int newY) throws IOException, AWTException;
+    void updatePreviousMap();
 }
