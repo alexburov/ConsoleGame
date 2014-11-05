@@ -13,8 +13,8 @@ public class Game implements IGame
         map.updatePreviousMap();
         map.spawnPlayer(10,10,100);
         player = (SwordsMan)map.units[10][10];
-        enemy = new SwordsMan(10,5,40, Unit.Team.Enemy);
-        map.addUnit(enemy);
+        enemy = new SwordsMan(17,5,40, Unit.Team.Enemy,"S");
+        map.addWorldObject(enemy);
     }
 
     @Override

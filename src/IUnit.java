@@ -17,7 +17,7 @@ public interface IUnit
     int getY();
     int getHealth();
 
-    void setTeam(Unit.Team newTeam);
+    void setTeam(WorldObject.Team newTeam);
     void setX(int newX);
     void setY(int newY);
     void setHealth(int newHealth);

@@ -1,53 +1,17 @@
-abstract class Unit implements IUnit
+abstract class Unit extends WorldObject implements IUnit
 {
     public Unit(int x, int y, int health, Team team)
     {
         setX(x);
         setY(y);
         setHealth(health);
-        character = "S";
         setTeam(team);
-
     }
 
-    private int x, y;
-    private Team team;
 
-    public enum Team
-    {
-        Enemy,
-        Player,
-        Neutral;
-    }
     private int health;
 
-    private String character;
 
-    public int getX()
-    {
-        return this.x;
-    }
-
-    public void setX(int newX)
-    {
-        this.x = newX;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
-
-    public void setY(int newY)
-    {
-        this.y = newY;
-    }
-
-    @Override
-    public void setTeam(Team team)
-    {
-        this.team = team;
-    }
 
     public int getHealth()
     {
@@ -104,14 +68,10 @@ abstract class Unit implements IUnit
     @Override
     public void die()
     {
-        this.character = "x";
+        this.setCharacter("x");
     }
 
-    @Override
-    public String toString()
-    {
-        return this.character;
-    }
+
 
     @Override
     public int getDamage()
@@ -119,8 +79,5 @@ abstract class Unit implements IUnit
         return 10 + (this.getHealth()/4);
     }
 
-    public Team getTeam()
-    {
-        return this.team;
-    }
+
 }

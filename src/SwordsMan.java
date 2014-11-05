@@ -1,8 +1,9 @@
 public class SwordsMan extends Unit implements IUnit
 {
-    public SwordsMan(int x, int y, int health, Team team)
+    public SwordsMan(int x, int y, int health, Team team, String character)
     {
         super(x, y, health, team);
+        this.setCharacter("S");
     }
 
 
