@@ -49,32 +49,38 @@ public class Map implements IMap
     @Override
     public void changeUnitPosition(IUnit unit, int newX, int newY)
     {
-        IUnit checkUnit = this.units[newY][newX];
-        if (checkUnit == null || !checkUnit.isAlive())
+        if (unit.isAlive())
         {
-            IUnit previousUnit = previousUnits[unit.getY()][unit.getX()];
-            updatePreviousMap();
-            this.units[unit.getY()][unit.getX()] = previousUnit;
-            unit.setX(newX);
-            unit.setY(newY);
-            this.units[newY][newX] = unit;
-            this.clearWorld();
-            this.printMap();
-        }
-        else
-        {
-            while (checkUnit.isAlive())
+            IUnit checkUnit = this.units[newY][newX];
+            if (checkUnit == null || !checkUnit.isAlive())
             {
-                unit.fight(checkUnit);
-                try
-                {
-                    Thread.sleep(1000);
-                }
-                catch (Exception ex)
-                {
+                IUnit previousUnit = previousUnits[unit.getY()][unit.getX()];
 
+                if (previousUnit != null && previousUnit.equals(unit))
+                {
+                    previousUnit = null;
                 }
+                updatePreviousMap();
+                this.units[unit.getY()][unit.getX()] = previousUnit;
+                unit.setX(newX);
+                unit.setY(newY);
+                this.units[newY][newX] = unit;
+                this.clearWorld();
                 this.printMap();
+            } else if (checkUnit.getTeam() != unit.getTeam() && checkUnit.getTeam() != Unit.Team.Neutral)
+            {
+                while (unit.isAlive() && checkUnit.isAlive())
+                {
+                    unit.fight(checkUnit);
+                    this.printMap();
+                    try
+                    {
+                        Thread.sleep(1000);
+                    } catch (Exception ex)
+                    {
+
+                    }
+                }
             }
         }
     }
@@ -104,6 +110,6 @@ public class Map implements IMap
     @Override
     public void spawnPlayer(int x, int y, int health)
     {
-        addUnit(new SwordsMan(x, y, health));
+        addUnit(new SwordsMan(x, y, health, Unit.Team.Player));
     }
 }

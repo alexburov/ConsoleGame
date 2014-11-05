@@ -1,15 +1,24 @@
 abstract class Unit implements IUnit
 {
-    public Unit(int x, int y, int health)
+    public Unit(int x, int y, int health, Team team)
     {
         setX(x);
         setY(y);
         setHealth(health);
         character = "S";
+        setTeam(team);
+
     }
 
     private int x, y;
+    private Team team;
 
+    public enum Team
+    {
+        Enemy,
+        Player,
+        Neutral;
+    }
     private int health;
 
     private String character;
@@ -32,6 +41,12 @@ abstract class Unit implements IUnit
     public void setY(int newY)
     {
         this.y = newY;
+    }
+
+    @Override
+    public void setTeam(Team team)
+    {
+        this.team = team;
     }
 
     public int getHealth()
@@ -75,6 +90,7 @@ abstract class Unit implements IUnit
         this.setHealth(currentHealth-damage);
     }
 
+    @Override
     public boolean isAlive()
     {
         if (this.getHealth() > 0)
@@ -85,6 +101,7 @@ abstract class Unit implements IUnit
         }
     }
 
+    @Override
     public void die()
     {
         this.character = "x";
@@ -96,8 +113,14 @@ abstract class Unit implements IUnit
         return this.character;
     }
 
+    @Override
     public int getDamage()
     {
         return 10 + (this.getHealth()/4);
+    }
+
+    public Team getTeam()
+    {
+        return this.team;
     }
 }
