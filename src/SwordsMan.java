@@ -3,7 +3,7 @@ public class SwordsMan extends Unit implements IUnit
     public SwordsMan(int x, int y, int health, Team team, String character)
     {
         super(x, y, health, team);
-        this.setCharacter("S");
+        this.setCharacter('S');
     }
 
 
@@ -21,7 +21,8 @@ public class SwordsMan extends Unit implements IUnit
             this.decreaseHealth(unit.getDamage());
             System.out.println("You recieved " + unit.getDamage() + " damage");
             System.out.println("Yours health: " + this.getHealth());
-        } else
+        }
+        else
         {
             unit.die();
             return;

@@ -10,7 +10,7 @@ public class WorldObject implements IWorldObject
         Neutral;
     }
 
-    private String character;
+    private char character;
 
     public int getX()
     {
@@ -28,18 +28,18 @@ public class WorldObject implements IWorldObject
     }
 
     @Override
-    public String getCharacter()
+    public char getCharacter()
     {
         return this.character;
     }
 
     public void setY(int newY)
     {
-        this.y = newY;
+            this.y = newY;
     }
 
     @Override
-    public void setCharacter(String newCharacter)
+    public void setCharacter(char newCharacter)
     {
         this.character = newCharacter;
     }
@@ -51,7 +51,7 @@ public class WorldObject implements IWorldObject
 
     public String toString()
     {
-        return this.character;
+        return String.valueOf(character);
     }
 
     public Team getTeam()

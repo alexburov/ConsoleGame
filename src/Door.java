@@ -5,6 +5,6 @@ public class Door extends WorldObject
         this.setX(x);
         this.setY(y);
         this.setTeam(Team.Neutral);
-        this.setCharacter("#");
+        this.setCharacter('8');
     }
 }

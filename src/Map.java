@@ -36,9 +36,9 @@ public class Map implements IMap
     }
 
     @Override
-    public void addWorldObject(IWorldObject unit)
+    public void addWorldObject(IWorldObject object)
     {
-        this.units[unit.getY()][unit.getX()] = unit;
+        this.units[object.getY()][object.getX()] = object;
         clearWorld();
         this.printMap();
     }
@@ -46,44 +46,76 @@ public class Map implements IMap
     @Override
     public void changeUnitPosition(IUnit unit, int newX, int newY)
     {
-        IWorldObject checkObject = this.units[newY][newX];
-        if (checkObject == null || checkObject instanceof IUnit)
+        try
         {
-            if (unit.isAlive())
-            {
-                IUnit checkUnit = (IUnit) checkObject;
-                if (checkUnit == null || !checkUnit.isAlive())
-                {
-                    IUnit previousUnit = (IUnit) previousUnits[unit.getY()][unit.getX()];
+           IWorldObject previousUnit = previousUnits[unit.getY()][unit.getX()];
+           IWorldObject checkObject  = this.units[newY][newX];
 
-                    if (previousUnit != null && previousUnit.equals(unit))
+
+           if (checkObject instanceof Door)
+           {
+               changePreviousPositionForPreviousUnit(previousUnit,(IWorldObject)unit);
+
+                if (checkObject.getY() == unit.getY())
+                {
+                    if (checkObject.getX() < unit.getX())
                     {
-                        previousUnit = null;
+                        newX--;
+                        modifyMap((IWorldObject)unit,newX,newY);
                     }
-                    updatePreviousMap();
-                    this.units[unit.getY()][unit.getX()] = (IWorldObject) previousUnit;
-                    unit.setX(newX);
-                    unit.setY(newY);
-                    this.units[newY][newX] = (IWorldObject) unit;
-                    this.clearWorld();
-                    this.printMap();
-                } else if (checkUnit.getTeam() != unit.getTeam() && checkUnit.getTeam() != Unit.Team.Neutral)
-                {
-                    while (unit.isAlive() && checkUnit.isAlive())
+                    else if (checkObject.getX() > unit.getX())
                     {
-                        unit.fight(checkUnit);
-                        this.printMap();
-                        try
-                        {
-                            Thread.sleep(1000);
-                        } catch (Exception ex)
-                        {
+                        newX++;
+                        modifyMap((IWorldObject)unit,newX,newY);
+                    }
+                }
 
+                else if (checkObject.getX() == unit.getX())
+                {
+                    if (checkObject.getY() < unit.getY())
+                    {
+                        newY--;
+                        modifyMap((IWorldObject)unit,newX,newY);
+                    }
+                    else if (checkObject.getY() > unit.getY())
+                    {
+                        newY++;
+                        modifyMap((IWorldObject)unit,newX,newY);
+                    }
+                }
+            }
+            else if (checkObject == null || checkObject instanceof IUnit)
+            {
+                if (unit.isAlive())
+                {
+                    IUnit checkUnit = (IUnit) checkObject;
+                    if (checkUnit == null || !checkUnit.isAlive())
+                    {
+                        changePreviousPositionForPreviousUnit(previousUnit,(IWorldObject)unit);
+                        modifyMap((IWorldObject)unit,newX,newY);
+                    }
+                    else if (checkUnit.getTeam() != unit.getTeam() && checkUnit.getTeam() != Unit.Team.Neutral)
+                    {
+                        while (unit.isAlive() && checkUnit.isAlive())
+                        {
+                            unit.fight(checkUnit);
+                            this.printMap();
+                            try
+                            {
+                                Thread.sleep(1000);
+                            } catch (Exception ex)
+                            {
+
+                            }
                         }
                     }
                 }
             }
         }
+        catch (Exception ex)
+        {
+        }
+
     }
 
     @Override
@@ -112,5 +144,22 @@ public class Map implements IMap
     public void spawnPlayer(int x, int y, int health)
     {
         addWorldObject(new SwordsMan(x, y, health, Unit.Team.Player, "S"));
+    }
+
+    private void modifyMap(IWorldObject object, int newX, int newY)
+    {
+        object.setX(newX);
+        object.setY(newY);
+        this.addWorldObject(object);
+    }
+
+    private void changePreviousPositionForPreviousUnit(IWorldObject previousUnit, IWorldObject unit)
+    {
+        if (previousUnit != null && previousUnit.equals(unit))
+        {
+            previousUnit = null;
+        }
+        updatePreviousMap();
+        this.units[unit.getY()][unit.getX()] = previousUnit;
     }
 }

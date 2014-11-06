@@ -68,7 +68,7 @@ abstract class Unit extends WorldObject implements IUnit
     @Override
     public void die()
     {
-        this.setCharacter("x");
+        this.setCharacter('x');
     }
 
 
